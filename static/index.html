@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <title>Title</title>
+        <style>
+            td {
+                padding: 5px 15px;
+                max-width: 400px;
+                vertical-align: top;
+            }
+            .hide {
+                display: none;
+            }
+
+            .money,
+            .indebtedness {
+                text-align: right;
+                white-space: nowrap;
+            }
+        </style>
+    </head>
+    <body>
+        <table id="organizations" class="hide">
+            <thead>
+                <tr>
+                    <td>Название</td>
+                    <td class="indebtedness">Задолженность</td>
+                    <td class="money">Прибыль</td>
+                    <td>Адрес</td>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+
+        <template id="orgTemplate">
+            <tr>
+                <td class="name"></td>
+                <td class="indebtedness"></td>
+                <td class="money"></td>
+                <td class="address"></td>
+            </tr>
+        </template>
+
+        <script src="focus.js"></script>
+    </body>
+</html>

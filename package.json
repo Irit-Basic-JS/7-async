@@ -1,0 +1,14 @@
+{
+  "name": "async",
+  "version": "1.0.0",
+  "description": "async JS task server",
+  "main": "server.js",
+  "scripts": {
+    "server": "node server.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}

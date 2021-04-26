@@ -1,0 +1,425 @@
+{
+  "1130280036040": {
+    "inn": "0277129928",
+    "ogrn": "1130280036040",
+    "focusHref": "https:\/\/focus.kontur.ru\/entity?query=1130280036040",
+    "UL": {
+      "kpp": "027701001",
+      "legalName": {
+        "short": "ООО \"Бавария Авто\"",
+        "full": "Общество с ограниченной ответственностью \"Бавария Авто\"",
+        "date": "2013-06-10"
+      },
+      "legalAddress": {
+        "parsedAddressRF": {
+          "zipCode": "450065",
+          "kladrCode": "020000010000157",
+          "regionCode": "02",
+          "regionName": {
+            "topoShortName": "респ",
+            "topoFullName": "республика",
+            "topoValue": "Башкортостан"
+          },
+          "city": {
+            "topoShortName": "г",
+            "topoFullName": "город",
+            "topoValue": "Уфа"
+          },
+          "street": {
+            "topoShortName": "ул",
+            "topoFullName": "улица",
+            "topoValue": "Свободы"
+          },
+          "house": {
+            "topoShortName": "дом",
+            "topoFullName": "дом",
+            "topoValue": "55"
+          },
+          "houseRaw": "55"
+        },
+        "date": "2013-06-10",
+        "firstDate": "2013-06-10"
+      }
+    }
+  },
+  "1106659003769": {
+    "inn": "6659202842",
+    "ogrn": "1106659003769",
+    "focusHref": "https:\/\/focus.kontur.ru\/entity?query=1106659003769",
+    "UL": {
+      "kpp": "667801001",
+      "legalName": {
+        "short": "ООО \"Лидер\"",
+        "full": "Общество с ограниченной ответственностью \"Лидер\"",
+        "date": "2010-03-26"
+      },
+      "legalAddress": {
+        "parsedAddressRF": {
+          "zipCode": "620027",
+          "kladrCode": "660000010000518",
+          "regionCode": "66",
+          "regionName": {
+            "topoShortName": "обл",
+            "topoFullName": "область",
+            "topoValue": "Свердловская"
+          },
+          "city": {
+            "topoShortName": "г",
+            "topoFullName": "город",
+            "topoValue": "Екатеринбург"
+          },
+          "street": {
+            "topoShortName": "ул",
+            "topoFullName": "улица",
+            "topoValue": "Короленко"
+          },
+          "house": {
+            "topoShortName": "дом",
+            "topoFullName": "дом",
+            "topoValue": "10А"
+          },
+          "flat": {
+            "topoValue": "33"
+          },
+          "houseRaw": "10А",
+          "flatRaw": "33"
+        },
+        "date": "2010-03-26",
+        "firstDate": "2010-03-26"
+      }
+    }
+  },
+  "1106659013658": {
+    "inn": "6659212858",
+    "ogrn": "1106659013658",
+    "focusHref": "https:\/\/focus.kontur.ru\/entity?query=1106659013658",
+    "UL": {
+      "kpp": "165601001",
+      "legalName": {
+        "short": "ООО \"Ну держись уралмаш\"",
+        "full": "Общество с ограниченной ответственностью \"Ну держись уралмаш\"",
+        "date": "2010-12-09"
+      },
+      "legalAddress": {
+        "parsedAddressRF": {
+          "zipCode": "420079",
+          "kladrCode": "160000010001158",
+          "regionCode": "16",
+          "regionName": {
+            "topoShortName": "респ",
+            "topoFullName": "республика",
+            "topoValue": "Татарстан"
+          },
+          "city": {
+            "topoShortName": "г",
+            "topoFullName": "город",
+            "topoValue": "Казань"
+          },
+          "street": {
+            "topoShortName": "пер",
+            "topoFullName": "переулок",
+            "topoValue": "Поселковый"
+          },
+          "house": {
+            "topoShortName": "дом",
+            "topoFullName": "дом",
+            "topoValue": "31"
+          },
+          "flat": {
+            "topoShortName": "пом",
+            "topoFullName": "помещение",
+            "topoValue": "5"
+          },
+          "houseRaw": "ДОМ 31",
+          "flatRaw": "ПОМЕЩЕНИЕ 5"
+        },
+        "date": "2015-05-05",
+        "firstDate": "2015-05-05"
+      }
+    }
+  },
+  "1026604939855": {
+    "inn": "6660003190",
+    "ogrn": "1026604939855",
+    "focusHref": "https:\/\/focus.kontur.ru\/entity?query=1026604939855",
+    "UL": {
+      "kpp": "667001001",
+      "legalName": {
+        "short": "ФГАОУ ВО \"УРФУ ИМЕНИ ПЕРВОГО ПРЕЗИДЕНТА РОССИИ Б.Н. ЕЛЬЦИНА\", УРАЛЬСКИЙ ФЕДЕРАЛЬНЫЙ УНИВЕРСИТЕТ, УРФУ\"",
+        "full": "ФЕДЕРАЛЬНОЕ ГОСУДАРСТВЕННОЕ АВТОНОМНОЕ ОБРАЗОВАТЕЛЬНОЕ УЧРЕЖДЕНИЕ ВЫСШЕГО ОБРАЗОВАНИЯ \"УРАЛЬСКИЙ ФЕДЕРАЛЬНЫЙ УНИВЕРСИТЕТ ИМЕНИ ПЕРВОГО ПРЕЗИДЕНТА РОССИИ Б.Н. ЕЛЬЦИНА\"",
+        "date": "2016-05-04"
+      },
+      "legalAddress": {
+        "parsedAddressRF": {
+          "zipCode": "620002",
+          "kladrCode": "660000010000685",
+          "regionCode": "66",
+          "regionName": {
+            "topoShortName": "обл",
+            "topoFullName": "область",
+            "topoValue": "Свердловская"
+          },
+          "city": {
+            "topoShortName": "г",
+            "topoFullName": "город",
+            "topoValue": "Екатеринбург"
+          },
+          "street": {
+            "topoShortName": "ул",
+            "topoFullName": "улица",
+            "topoValue": "Мира"
+          },
+          "house": {
+            "topoShortName": "дом",
+            "topoFullName": "дом",
+            "topoValue": "19"
+          },
+          "houseRaw": "ДОМ 19"
+        },
+        "date": "2015-12-10",
+        "firstDate": "2002-09-06"
+      }
+    }
+  },
+  "1026605606620": {
+    "inn": "6663003127",
+    "ogrn": "1026605606620",
+    "focusHref": "https:\/\/focus.kontur.ru\/entity?query=1026605606620",
+    "UL": {
+      "kpp": "668601001",
+      "legalName": {
+        "short": "АО \"ПФ \"СКБ Контур\"",
+        "full": "Акционерное общество \"Производственная фирма \"СКБ Контур\"",
+        "date": "2017-06-21"
+      },
+      "legalAddress": {
+        "parsedAddressRF": {
+          "zipCode": "620017",
+          "kladrCode": "660000010000522",
+          "regionCode": "66",
+          "regionName": {
+            "topoShortName": "обл",
+            "topoFullName": "область",
+            "topoValue": "Свердловская"
+          },
+          "city": {
+            "topoShortName": "г",
+            "topoFullName": "город",
+            "topoValue": "Екатеринбург"
+          },
+          "street": {
+            "topoShortName": "пр-кт",
+            "topoFullName": "проспект",
+            "topoValue": "Космонавтов"
+          },
+          "house": {
+            "topoShortName": "дом",
+            "topoFullName": "дом",
+            "topoValue": "56"
+          },
+          "houseRaw": "56"
+        },
+        "date": "2008-12-19",
+        "firstDate": "2008-12-19"
+      }
+    }
+  },
+  "1027402166835": {
+    "inn": "7414003633",
+    "ogrn": "1027402166835",
+    "focusHref": "https:\/\/focus.kontur.ru\/entity?query=1027402166835",
+    "UL": {
+      "kpp": "745501001",
+      "legalName": {
+        "short": "ПАО \"ММК\"",
+        "full": "ПУБЛИЧНОЕ АКЦИОНЕРНОЕ ОБЩЕСТВО \"МАГНИТОГОРСКИЙ МЕТАЛЛУРГИЧЕСКИЙ КОМБИНАТ\"",
+        "date": "2017-06-05"
+      },
+      "legalAddress": {
+        "parsedAddressRF": {
+          "zipCode": "455000",
+          "kladrCode": "740000090000147",
+          "regionCode": "74",
+          "regionName": {
+            "topoShortName": "обл",
+            "topoFullName": "область",
+            "topoValue": "Челябинская"
+          },
+          "city": {
+            "topoShortName": "г",
+            "topoFullName": "город",
+            "topoValue": "Магнитогорск"
+          },
+          "street": {
+            "topoShortName": "ул",
+            "topoFullName": "улица",
+            "topoValue": "Кирова"
+          },
+          "house": {
+            "topoShortName": "дом",
+            "topoFullName": "дом",
+            "topoValue": "93"
+          },
+          "houseRaw": "93"
+        },
+        "date": "2006-06-01",
+        "firstDate": "2002-08-12"
+      }
+    }
+  },
+  "1037739877295": {
+    "inn": "7708503727",
+    "ogrn": "1037739877295",
+    "focusHref": "https:\/\/focus.kontur.ru\/entity?query=1037739877295",
+    "UL": {
+      "kpp": "770801001",
+      "legalName": {
+        "short": "ОАО \"РЖД\"",
+        "full": "Открытое акционерное общество \"Российские железные дороги\"",
+        "date": "2014-04-25"
+      },
+      "legalAddress": {
+        "parsedAddressRF": {
+          "zipCode": "107174",
+          "kladrCode": "770000000000627",
+          "regionCode": "77",
+          "regionName": {
+            "topoShortName": "г",
+            "topoFullName": "город",
+            "topoValue": "Москва"
+          },
+          "street": {
+            "topoShortName": "ул",
+            "topoFullName": "улица",
+            "topoValue": "Басманная Нов"
+          },
+          "house": {
+            "topoShortName": "дом",
+            "topoFullName": "дом",
+            "topoValue": "2"
+          },
+          "houseRaw": "ДОМ 2"
+        },
+        "date": "2014-04-25",
+        "firstDate": "2012-08-02"
+      }
+    }
+  },
+  "1027700092661": {
+    "inn": "7712040126",
+    "ogrn": "1027700092661",
+    "focusHref": "https:\/\/focus.kontur.ru\/entity?query=1027700092661",
+    "UL": {
+      "kpp": "770401001",
+      "legalName": {
+        "short": "ПАО \"АЭРОФЛОТ\"",
+        "full": "ПУБЛИЧНОЕ АКЦИОНЕРНОЕ ОБЩЕСТВО \"АЭРОФЛОТ-РОССИЙСКИЕ АВИАЛИНИИ\"",
+        "date": "2015-07-01"
+      },
+      "legalAddress": {
+        "parsedAddressRF": {
+          "zipCode": "119002",
+          "kladrCode": "770000000000758",
+          "regionCode": "77",
+          "regionName": {
+            "topoShortName": "г",
+            "topoFullName": "город",
+            "topoValue": "Москва"
+          },
+          "street": {
+            "topoShortName": "ул",
+            "topoFullName": "улица",
+            "topoValue": "Арбат"
+          },
+          "house": {
+            "topoShortName": "дом",
+            "topoFullName": "дом",
+            "topoValue": "10"
+          },
+          "houseRaw": "10"
+        },
+        "date": "2010-01-25",
+        "firstDate": "2010-01-25"
+      }
+    }
+  },
+  "1027700070518": {
+    "inn": "7736050003",
+    "ogrn": "1027700070518",
+    "focusHref": "https:\/\/focus.kontur.ru\/entity?query=1027700070518",
+    "UL": {
+      "kpp": "772801001",
+      "legalName": {
+        "short": "ПАО \"ГАЗПРОМ\"",
+        "full": "ПУБЛИЧНОЕ АКЦИОНЕРНОЕ ОБЩЕСТВО \"ГАЗПРОМ\"",
+        "date": "2015-07-17"
+      },
+      "legalAddress": {
+        "parsedAddressRF": {
+          "zipCode": "117420",
+          "kladrCode": "770000000001948",
+          "regionCode": "77",
+          "regionName": {
+            "topoShortName": "г",
+            "topoFullName": "город",
+            "topoValue": "Москва"
+          },
+          "street": {
+            "topoShortName": "ул",
+            "topoFullName": "улица",
+            "topoValue": "Намёткина"
+          },
+          "house": {
+            "topoShortName": "дом",
+            "topoFullName": "дом",
+            "topoValue": "16"
+          },
+          "houseRaw": "ДОМ 16"
+        },
+        "date": "2016-06-16",
+        "firstDate": "2002-08-02"
+      }
+    }
+  },
+  "1115000005614": {
+    "inn": "9901998013",
+    "ogrn": "1115000005614",
+    "focusHref": "https:\/\/focus.kontur.ru\/entity?query=1115000005614",
+    "UL": {
+      "kpp": "990101001",
+      "legalName": {
+        "short": "ОО \"ППО КЦ \"ЮЖНЫЙ\" ОО \"ПРОФОБЩЕМАШ РОССИИ\"",
+        "full": "ОБЩЕСТВЕННАЯ ОРГАНИЗАЦИЯ \"ПЕРВИЧНАЯ ПРОФСОЮЗНАЯ ОРГАНИЗАЦИЯ КОСМИЧЕСКОГО ЦЕНТРА \"ЮЖНЫЙ\" ОБЩЕСТВЕННОЙ ОРГАНИЗАЦИИ \"ОБЩЕРОССИЙСКИЙ ПРОФЕССИОНАЛЬНЫЙ СОЮЗ РАБОТНИКОВ ОБЩЕГО МАШИНОСТРОЕНИЯ\"",
+        "date": "2016-06-17"
+      },
+      "legalAddress": {
+        "parsedAddressRF": {
+          "zipCode": "468320",
+          "kladrCode": "99000001000",
+          "regionCode": "99",
+          "regionName": {
+            "topoShortName": "г",
+            "topoFullName": "город",
+            "topoValue": "Байконур"
+          },
+          "city": {
+            "topoShortName": "г",
+            "topoFullName": "город",
+            "topoValue": "Байконур"
+          },
+          "street": {
+            "topoShortName": "ул",
+            "topoFullName": "улица",
+            "topoValue": "Лейтенанта Шмидта"
+          },
+          "house": {
+            "topoValue": "СООР.208"
+          },
+          "houseRaw": "СООР.208"
+        },
+        "date": "2011-10-11",
+        "firstDate": "2011-10-11"
+      }
+    }
+  }
+}
