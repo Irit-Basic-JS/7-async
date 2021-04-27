@@ -5,37 +5,43 @@ const API = {
     buhForms: "/api3/buh",
 };
 
-function run() {
-    sendRequest(API.organizationList, (orgOgrns) => {
-        const ogrns = orgOgrns.join(",");
-        sendRequest(`${API.orgReqs}?ogrn=${ogrns}`, (requisites) => {
-            const orgsMap = reqsToMap(requisites);
-            sendRequest(`${API.analytics}?ogrn=${ogrns}`, (analytics) => {
-                addInOrgsMap(orgsMap, analytics, "analytics");
-                sendRequest(`${API.buhForms}?ogrn=${ogrns}`, (buh) => {
-                    addInOrgsMap(orgsMap, buh, "buhForms");
-                    render(orgsMap, orgOgrns);
-                });
-            });
+async function run() {
+    const promises = [];
+    let ogrns;
+    let orgsMap;
+
+    await sendRequest(API.organizationList, async (orgOgrns) => {
+        ogrns = orgOgrns.join(",");
+
+        await sendRequest(`${API.orgReqs}?ogrn=${ogrns}`, async (requisites) => {
+            orgsMap = reqsToMap(requisites)
         });
-    });
+
+        promises.push(sendRequest(`${API.analytics}?ogrn=${ogrns}`, async (analytics) => {
+            addInOrgsMap(orgsMap, analytics, "analytics")
+        }));
+
+        promises.push(sendRequest(`${API.buhForms}?ogrn=${ogrns}`, async (buh) => {
+            addInOrgsMap(orgsMap, buh, "buhForms")
+        }));
+
+        await Promise.all(promises).then(() => render(orgsMap, orgOgrns))});
 }
 
 run();
 
 function sendRequest(url, callback) {
-    const xhr = new XMLHttpRequest();
-    xhr.open("GET", url, true);
-
-    xhr.onreadystatechange = function () {
-        if (xhr.readyState === XMLHttpRequest.DONE) {
-            if (xhr.status === 200) {
-                callback(JSON.parse(xhr.response));
-            }
+    return new Promise(async (resolve, reject) => {
+        const answer = await fetch(url);
+        if (answer.status === 200) {
+            await callback(JSON.parse(await answer.text()));
+            resolve();
         }
-    };
-
-    xhr.send();
+        else if (answer.status >= 300) {
+            alert(`HTTP Code ${answer.status}`);
+            reject(`HTTP Code ${answer.status}`);
+        }
+    });
 }
 
 function reqsToMap(requisites) {
@@ -86,7 +92,7 @@ function renderOrganization(orgInfo, template, container) {
                 orgInfo.buhForms[orgInfo.buhForms.length - 1].form2[0] &&
                 orgInfo.buhForms[orgInfo.buhForms.length - 1].form2[0]
                     .endValue) ||
-                0
+            0
         );
     } else {
         money.textContent = "—";
