@@ -16,7 +16,8 @@ async function run(values) {
 		addInOrgsMap(orgsMap, analytics, "analytics");
 		addInOrgsMap(orgsMap, buh, "buhForms");
 		render(orgsMap, ogrnsJson);
-	});
+	})
+	.catch(reason => alert(`Ошибка ${reason.textContent}`));
 }
 
 run();
