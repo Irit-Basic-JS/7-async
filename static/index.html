@@ -5,29 +5,46 @@
         <title>Title</title>
         <style>
             td {
+                border: 1px solid #ddd;
                 padding: 5px 15px;
                 max-width: 400px;
                 vertical-align: top;
             }
+
+            tr:nth-child(even) {
+                background-color: #f2f2f2;
+            }
+
+            tr:hover {
+                background-color: #ddd;
+            }
+
+            th {
+                padding: 5px 15px;
+                text-align: left;
+                background-color: #4CAF50;
+                color: white;
+            }
+
             .hide {
                 display: none;
             }
 
-            .money,
+            /* .money,
             .indebtedness {
                 text-align: right;
                 white-space: nowrap;
-            }
+            } */
         </style>
     </head>
     <body>
         <table id="organizations" class="hide">
             <thead>
                 <tr>
-                    <td>Название</td>
-                    <td class="indebtedness">Задолженность</td>
-                    <td class="money">Прибыль</td>
-                    <td>Адрес</td>
+                    <th>Название</th>
+                    <th class="indebtedness">Задолженность</th>
+                    <th class="money">Прибыль</th>
+                    <th>Адрес</th>
                 </tr>
             </thead>
             <tbody></tbody>
