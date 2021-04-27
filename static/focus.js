@@ -6,18 +6,20 @@ const API = {
 };
 
 function run() {
-    sendRequest(API.organizationList, (orgOgrns) => {
-        const ogrns = orgOgrns.join(",");
-        sendRequest(`${API.orgReqs}?ogrn=${ogrns}`, (requisites) => {
-            const orgsMap = reqsToMap(requisites);
-            sendRequest(`${API.analytics}?ogrn=${ogrns}`, (analytics) => {
-                addInOrgsMap(orgsMap, analytics, "analytics");
-                sendRequest(`${API.buhForms}?ogrn=${ogrns}`, (buh) => {
-                    addInOrgsMap(orgsMap, buh, "buhForms");
-                    render(orgsMap, orgOgrns);
-                });
-            });
-        });
+    let ogrOrgns = undefined;
+    let orgsMap = undefined;
+    sendRequestPromise(API.organizationList).then((orgOgrnss) => {
+        ogrOrgns = orgOgrnss;
+        return sendRequestPromise(`${API.orgReqs}?ogrn=${ogrOrgns.join(",")}`);
+    }).then((requisites) => {
+            orgsMap = reqsToMap(requisites);
+            return sendRequestPromise(`${API.analytics}?ogrn=${ogrOrgns}`);
+    }).then((analytics) => {
+            addInOrgsMap(orgsMap, analytics, "analytics");
+            return sendRequestPromise(`${API.buhForms}?ogrn=${ogrOrgns}`);
+    }).then((buh) => {
+            addInOrgsMap(orgsMap, buh, "buhForms");
+            render(orgsMap, ogrOrgns);
     });
 }
 
@@ -36,6 +38,16 @@ function sendRequest(url, callback) {
     };
 
     xhr.send();
+}
+
+async function sendRequestPromise(url) {
+    let response = await fetch(url);
+
+    if (response.ok) {
+        return response.json();
+    } else {
+        alert("Ошибка HTTP: " + response.status);
+    }
 }
 
 function reqsToMap(requisites) {
@@ -86,7 +98,7 @@ function renderOrganization(orgInfo, template, container) {
                 orgInfo.buhForms[orgInfo.buhForms.length - 1].form2[0] &&
                 orgInfo.buhForms[orgInfo.buhForms.length - 1].form2[0]
                     .endValue) ||
-                0
+            0
         );
     } else {
         money.textContent = "—";
