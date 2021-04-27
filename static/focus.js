@@ -5,38 +5,29 @@ const API = {
 	buhForms: "/api3/buh",
 };
 
-async function run() {
-	let ogrns;
-	let orgsMap;
-	const promises = [];
-	await sendRequest(API.organizationList, async (orgOgrns) => {
-		ogrns = orgOgrns.join(",");
-	});
-	promises.push(sendRequest(`${API.orgReqs}?ogrn=${ogrns}`, async (requisites) => {
-		orgsMap = reqsToMap(requisites);
-	}));
-	promises.push(sendRequest(`${API.analytics}?ogrn=${ogrns}`, async (analytics) => {
+async function run(values) {
+	const ogrnsJson = await sendRequest(API.organizationList);
+	const ogrns = ogrnsJson.join(",");
+	Promise.all([sendRequest(`${API.orgReqs}?ogrn=${ogrns}`),
+		sendRequest(`${API.analytics}?ogrn=${ogrns}`),
+		sendRequest(`${API.buhForms}?ogrn=${ogrns}`)])
+	.then(([requisites, analytics, buh]) => {
+		const orgsMap = reqsToMap(requisites);
 		addInOrgsMap(orgsMap, analytics, "analytics");
-	}));
-	promises.push(sendRequest(`${API.buhForms}?ogrn=${ogrns}`, async (buh) => {
 		addInOrgsMap(orgsMap, buh, "buhForms");
-		render(orgsMap, ogrns.split(','));
-	}));
-	await Promise.all(promises);
+		render(orgsMap, ogrnsJson);
+	});
 }
 
 run();
 
-function sendRequest(url, callback) {
-	return new Promise(async function (resolve, reject) {
-		const answer = await fetch(url);
-		if (answer.status === 200) {
-			callback(JSON.parse(await answer.text()));
-		} else if (answer.status >= 300) {
-			alert(`Код: ${answer.status}`);
-		}
-		resolve();
-	});
+async function sendRequest(url) {
+	const answer = await fetch(url);
+	if (answer.ok) {
+		return JSON.parse(await answer.text());
+	} else if (answer.status >= 300) {
+		alert(`Код: ${answer.status}`);
+	}
 }
 
 function reqsToMap(requisites) {
