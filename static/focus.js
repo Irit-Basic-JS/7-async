@@ -5,37 +5,34 @@ const API = {
     buhForms: "/api3/buh",
 };
 
-function run() {
-    sendRequest(API.organizationList, (orgOgrns) => {
-        const ogrns = orgOgrns.join(",");
-        sendRequest(`${API.orgReqs}?ogrn=${ogrns}`, (requisites) => {
-            const orgsMap = reqsToMap(requisites);
-            sendRequest(`${API.analytics}?ogrn=${ogrns}`, (analytics) => {
-                addInOrgsMap(orgsMap, analytics, "analytics");
-                sendRequest(`${API.buhForms}?ogrn=${ogrns}`, (buh) => {
-                    addInOrgsMap(orgsMap, buh, "buhForms");
-                    render(orgsMap, orgOgrns);
-                });
-            });
-        });
+async function run() {
+    await sendRequest(API.organizationList,  async(orgOgrns) => {
+        const promises = [];
+        let ogrns = orgOgrns.join(",");
+        let orgsMap;
+        await sendRequest(`${API.orgReqs}?ogrn=${ogrns}`, async(requisites) => {
+            orgsMap = reqsToMap(requisites)})
+        promises.push(sendRequest(`${API.analytics}?ogrn=${ogrns}`, async (analytics) => {
+            addInOrgsMap(orgsMap, analytics, "analytics")}));
+        promises.push(sendRequest(`${API.buhForms}?ogrn=${ogrns}`, async (buh) => {
+            addInOrgsMap(orgsMap, buh, "buhForms");
+            }));
+        Promise.all(promises).then(() => render(orgsMap, orgOgrns));
     });
 }
 
 run();
 
 function sendRequest(url, callback) {
-    const xhr = new XMLHttpRequest();
-    xhr.open("GET", url, true);
-
-    xhr.onreadystatechange = function () {
-        if (xhr.readyState === XMLHttpRequest.DONE) {
-            if (xhr.status === 200) {
-                callback(JSON.parse(xhr.response));
-            }
+    return new Promise(async (resolve) => {
+        const answer = await fetch(url);
+        if (answer.status === 200) {
+            callback(await JSON.parse(await answer.text()));
+        } else if (answer.status >= 300){
+            alert(`Ошибка ${answer.status}`);
         }
-    };
-
-    xhr.send();
+        resolve();
+    });
 }
 
 function reqsToMap(requisites) {
