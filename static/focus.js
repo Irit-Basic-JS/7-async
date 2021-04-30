@@ -5,37 +5,34 @@ const API = {
     buhForms: "/api3/buh",
 };
 
-function run() {
-    sendRequest(API.organizationList, (orgOgrns) => {
-        const ogrns = orgOgrns.join(",");
-        sendRequest(`${API.orgReqs}?ogrn=${ogrns}`, (requisites) => {
+async function run() {
+    let orgOgrns = await sendRequestFetch(API.organizationList);
+    const ogrns = orgOgrns.join(",");
+
+    Promise.all([
+        sendRequestFetch(`${API.orgReqs}?ogrn=${ogrns}`),
+        sendRequestFetch(`${API.analytics}?ogrn=${ogrns}`),
+        sendRequestFetch(`${API.buhForms}?ogrn=${ogrns}`)
+    ])
+        .then(([requisites, analytics, buh]) => {
             const orgsMap = reqsToMap(requisites);
-            sendRequest(`${API.analytics}?ogrn=${ogrns}`, (analytics) => {
-                addInOrgsMap(orgsMap, analytics, "analytics");
-                sendRequest(`${API.buhForms}?ogrn=${ogrns}`, (buh) => {
-                    addInOrgsMap(orgsMap, buh, "buhForms");
-                    render(orgsMap, orgOgrns);
-                });
-            });
-        });
-    });
+            addInOrgsMap(orgsMap, analytics, "analytics");
+            addInOrgsMap(orgsMap, buh, "buhForms");
+            render(orgsMap, orgOgrns);
+        })
+        .catch(reason => alert(reason));
 }
 
 run();
 
-function sendRequest(url, callback) {
-    const xhr = new XMLHttpRequest();
-    xhr.open("GET", url, true);
+async function sendRequestFetch(url) {
+    let response = await fetch(url);
 
-    xhr.onreadystatechange = function () {
-        if (xhr.readyState === XMLHttpRequest.DONE) {
-            if (xhr.status === 200) {
-                callback(JSON.parse(xhr.response));
-            }
-        }
-    };
-
-    xhr.send();
+    if (response.ok) {
+        return await response.json();
+    } else {
+        alert("Ошибка HTTP: " + response.status);
+    }
 }
 
 function reqsToMap(requisites) {
@@ -86,7 +83,7 @@ function renderOrganization(orgInfo, template, container) {
                 orgInfo.buhForms[orgInfo.buhForms.length - 1].form2[0] &&
                 orgInfo.buhForms[orgInfo.buhForms.length - 1].form2[0]
                     .endValue) ||
-                0
+            0
         );
     } else {
         money.textContent = "—";
@@ -119,11 +116,11 @@ function createAddress(address) {
     if (address.city) {
         addressToRender.push(createAddressItem("city"));
     }
-    if (address.street) {
-        addressToRender.push(createAddressItem("street"));
-    }
     if (address.house) {
         addressToRender.push(createAddressItem("house"));
+    }
+    if (address.street) {
+        addressToRender.push(createAddressItem("street"));
     }
 
     return addressToRender.join(", ");
