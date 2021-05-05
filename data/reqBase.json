@@ -6,8 +6,8 @@
     "UL": {
       "kpp": "027701001",
       "legalName": {
-        "short": "ООО \"Бавария Авто\"",
-        "full": "Общество с ограниченной ответственностью \"Бавария Авто\"",
+        "short": "ООО \"Макар, когда интенсив проверишь?\"",
+        "full": "Общество с ограниченной ответственностью \"Макар, когда интенсив проверишь?\"",
         "date": "2013-06-10"
       },
       "legalAddress": {
@@ -16,26 +16,26 @@
           "kladrCode": "020000010000157",
           "regionCode": "02",
           "regionName": {
-            "topoShortName": "респ",
-            "topoFullName": "республика",
-            "topoValue": "Башкортостан"
+            "topoShortName": "обл",
+            "topoFullName": "область",
+            "topoValue": "Свердловская"
           },
           "city": {
             "topoShortName": "г",
             "topoFullName": "город",
-            "topoValue": "Уфа"
+            "topoValue": "Екатеринбург"
           },
           "street": {
-            "topoShortName": "ул",
-            "topoFullName": "улица",
-            "topoValue": "Свободы"
+            "topoShortName": "мкр",
+            "topoFullName": "микрорайон",
+            "topoValue": "ЖБИ"
           },
           "house": {
             "topoShortName": "дом",
             "topoFullName": "дом",
-            "topoValue": "55"
+            "topoValue": "хз"
           },
-          "houseRaw": "55"
+          "houseRaw": "хз"
         },
         "date": "2013-06-10",
         "firstDate": "2013-06-10"
