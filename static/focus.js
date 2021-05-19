@@ -1,41 +1,38 @@
 const API = {
-    organizationList: "/orgsList",
-    analytics: "/api3/analytics",
-    orgReqs: "/api3/reqBase",
-    buhForms: "/api3/buh",
+	organizationList: "/orgsList",
+	analytics: "/api3/analytics",
+	orgReqs: "/api3/reqBase",
+	buhForms: "/api3/buh",
 };
 
-function run() {
-    sendRequest(API.organizationList, (orgOgrns) => {
-        const ogrns = orgOgrns.join(",");
-        sendRequest(`${API.orgReqs}?ogrn=${ogrns}`, (requisites) => {
+async function run() {
+	const organizationResponse = await sendRequest(API.organizationList);
+	const allOrgsNames = organizationResponse.join(",");
+	Promise
+        .all([sendRequest(`${API.orgReqs}?ogrn=${allOrgsNames}`),
+            sendRequest(`${API.analytics}?ogrn=${allOrgsNames}`),
+            sendRequest(`${API.buhForms}?ogrn=${allOrgsNames}`)])
+	    .then(([requisites, analytics, buh]) => {
             const orgsMap = reqsToMap(requisites);
-            sendRequest(`${API.analytics}?ogrn=${ogrns}`, (analytics) => {
-                addInOrgsMap(orgsMap, analytics, "analytics");
-                sendRequest(`${API.buhForms}?ogrn=${ogrns}`, (buh) => {
-                    addInOrgsMap(orgsMap, buh, "buhForms");
-                    render(orgsMap, orgOgrns);
-                });
-            });
-        });
-    });
+            addInOrgsMap(orgsMap, analytics, "analytics");
+            addInOrgsMap(orgsMap, buh, "buhForms");
+            render(orgsMap, organizationResponse);
+        })
+        .catch(reason => alert(`Error!!!\nReason: ${reason.textContent}`));
 }
 
 run();
 
-function sendRequest(url, callback) {
-    const xhr = new XMLHttpRequest();
-    xhr.open("GET", url, true);
+async function sendRequest(url) {
+	const response = await fetch(url);
 
-    xhr.onreadystatechange = function () {
-        if (xhr.readyState === XMLHttpRequest.DONE) {
-            if (xhr.status === 200) {
-                callback(JSON.parse(xhr.response));
-            }
-        }
-    };
-
-    xhr.send();
+	if (response.ok) {
+		return JSON.parse(await response.text());
+	} 
+    
+    if (response.status >= 300) {
+		alert(`Response status: ${response.status}`);
+	}
 }
 
 function reqsToMap(requisites) {
@@ -51,15 +48,15 @@ function addInOrgsMap(orgsMap, additionalInfo, key) {
     }
 }
 
-function render(organizationsInfo, organizationsOrder) {
-    const table = document.getElementById("organizations");
+function render(allOrgsNamesInfo, allOrgsNamesOrder) {
+    const table = document.getElementById("allOrgsNames");
     table.classList.remove("hide");
 
     const template = document.getElementById("orgTemplate");
     const container = table.querySelector("tbody");
 
-    organizationsOrder.forEach((item) => {
-        renderOrganization(organizationsInfo[item], template, container);
+    allOrgsNamesOrder.forEach((item) => {
+        renderOrganization(allOrgsNamesInfo[item], template, container);
     });
 }
 
