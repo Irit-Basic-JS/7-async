@@ -25,7 +25,7 @@ async function run() {
 
 run();
 
-function sendRequest(url) {
+async function sendRequest(url) {
     let fetchedUrl = await fetch(url);
     if(fetchedUrl.ok) 
         return await fetchedUrl.json();
