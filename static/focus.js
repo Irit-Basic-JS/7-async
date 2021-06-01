@@ -14,7 +14,6 @@ async function run() {
         sendRequestFetch(`${API.analytics}?ogrn=${ogrns}`),
         sendRequestFetch(`${API.buhForms}?ogrn=${ogrns}`)
     ])
-
         .then(([requisites, analytics, buh]) => {
             const orgsMap = reqsToMap(requisites);
             addInOrgsMap(orgsMap, analytics, "analytics");
@@ -35,6 +34,7 @@ async function sendRequestFetch(url) {
         alert("Ошибка HTTP: " + response.status);
     }
 }
+
 
 function reqsToMap(requisites) {
     return requisites.reduce((acc, item) => {
@@ -117,11 +117,11 @@ function createAddress(address) {
     if (address.city) {
         addressToRender.push(createAddressItem("city"));
     }
-    if (address.street) {
-        addressToRender.push(createAddressItem("street"));
-    }
     if (address.house) {
         addressToRender.push(createAddressItem("house"));
+    }
+    if (address.street) {
+        addressToRender.push(createAddressItem("street"));
     }
 
     return addressToRender.join(", ");
