@@ -4,7 +4,6 @@ const API = {
     orgReqs: "/api3/reqBase",
     buhForms: "/api3/buh",
 };
-
 async function run() {
     let orgOgrns = await sendRequest(API.organizationList)
     let ogrns = orgOgrns.join(",");
@@ -21,7 +20,6 @@ async function run() {
         })
         .catch((error) => alert(error))
 }
-
 run();
 async function sendRequest(url) {
     let response = await fetch(url);
@@ -30,7 +28,6 @@ async function sendRequest(url) {
     else 
         alert("Ошибка HTTP: " + response.status);
 }
-
 function reqsToMap(requisites) {
     return requisites.reduce((acc, item) => {
         acc[item.ogrn] = item;
