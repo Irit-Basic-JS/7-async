@@ -5,37 +5,32 @@ const API = {
     buhForms: "/api3/buh",
 };
 
-function run() {
-    sendRequest(API.organizationList, (orgOgrns) => {
-        const ogrns = orgOgrns.join(",");
-        sendRequest(`${API.orgReqs}?ogrn=${ogrns}`, (requisites) => {
-            const orgsMap = reqsToMap(requisites);
-            sendRequest(`${API.analytics}?ogrn=${ogrns}`, (analytics) => {
-                addInOrgsMap(orgsMap, analytics, "analytics");
-                sendRequest(`${API.buhForms}?ogrn=${ogrns}`, (buh) => {
-                    addInOrgsMap(orgsMap, buh, "buhForms");
-                    render(orgsMap, orgOgrns);
-                });
-            });
-        });
+async function run() {
+    let orgOgrns = await sendRequestPromise(API.organizationList);
+    let ogrns = orgOgrns.join(',');
+
+    await Promise.all([
+        sendRequestPromise(`${API.orgReqs}?ogrn=${ogrns}`),
+        sendRequestPromise(`${API.analytics}?ogrn=${ogrns}`),
+        sendRequestPromise(`${API.buhForms}?ogrn=${ogrns}`)
+    ]).then(([requisites='', analytics='', buh='']) => {
+        const orgsMap = reqsToMap(requisites);
+        addInOrgsMap(orgsMap, analytics, 'analytics');
+        addInOrgsMap(orgsMap, buh, 'buhForms');
+        render(orgsMap, orgOgrns);
     });
 }
 
 run();
 
-function sendRequest(url, callback) {
-    const xhr = new XMLHttpRequest();
-    xhr.open("GET", url, true);
+async function sendRequestPromise(url) {
+    let response = await fetch(url);
 
-    xhr.onreadystatechange = function () {
-        if (xhr.readyState === XMLHttpRequest.DONE) {
-            if (xhr.status === 200) {
-                callback(JSON.parse(xhr.response));
-            }
-        }
-    };
-
-    xhr.send();
+    if (response.ok) {
+        return response.json();
+    } else {
+        alert("Ошибка HTTP: " + response.status);
+    }
 }
 
 function reqsToMap(requisites) {
@@ -44,37 +39,30 @@ function reqsToMap(requisites) {
         return acc;
     }, {});
 }
-
 function addInOrgsMap(orgsMap, additionalInfo, key) {
     for (const item of additionalInfo) {
         orgsMap[item.ogrn][key] = item[key];
     }
 }
-
 function render(organizationsInfo, organizationsOrder) {
     const table = document.getElementById("organizations");
     table.classList.remove("hide");
-
     const template = document.getElementById("orgTemplate");
     const container = table.querySelector("tbody");
-
     organizationsOrder.forEach((item) => {
         renderOrganization(organizationsInfo[item], template, container);
     });
 }
-
 function renderOrganization(orgInfo, template, container) {
     const clone = document.importNode(template.content, true);
     const name = clone.querySelector(".name");
     const indebtedness = clone.querySelector(".indebtedness");
     const money = clone.querySelector(".money");
     const address = clone.querySelector(".address");
-
     name.textContent =
         (orgInfo.UL && orgInfo.UL.legalName && orgInfo.UL.legalName.short) ||
         "";
     indebtedness.textContent = formatMoney(orgInfo.analytics.s1002 || 0);
-
     if (
         orgInfo.buhForms &&
         orgInfo.buhForms.length &&
@@ -86,31 +74,25 @@ function renderOrganization(orgInfo, template, container) {
                 orgInfo.buhForms[orgInfo.buhForms.length - 1].form2[0] &&
                 orgInfo.buhForms[orgInfo.buhForms.length - 1].form2[0]
                     .endValue) ||
-                0
+            0
         );
     } else {
         money.textContent = "—";
     }
-
     const addressFromServer = orgInfo.UL.legalAddress.parsedAddressRF;
     address.textContent = createAddress(addressFromServer);
-
     container.appendChild(clone);
 }
-
 function formatMoney(money) {
     let formatted = money.toFixed(2);
     formatted = formatted.replace(".", ",");
-
     const rounded = money.toFixed(0);
     const numLen = rounded.length;
     for (let i = numLen - 3; i > 0; i -= 3) {
         formatted = `${formatted.slice(0, i)} ${formatted.slice(i)}`;
     }
-
     return `${formatted} ₽`;
 }
-
 function createAddress(address) {
     const addressToRender = [];
     if (address.regionName) {
@@ -125,9 +107,7 @@ function createAddress(address) {
     if (address.house) {
         addressToRender.push(createAddressItem("house"));
     }
-
     return addressToRender.join(", ");
-
     function createAddressItem(key) {
         return `${address[key].topoShortName}. ${address[key].topoValue}`;
     }
