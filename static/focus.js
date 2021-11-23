@@ -8,16 +8,26 @@ const API = {
 async function run() {
     const orgOgrns = await sendRequest(API.organizationList);
     const ogrns = orgOgrns.join(",");
-    const orgsMap = reqsToMap(await sendRequest(`${API.orgReqs}?ogrn=${ogrns}`));
-    addInOrgsMap(orgsMap, await sendRequest(`${API.analytics}?ogrn=${ogrns}`), "analytics");
-    addInOrgsMap(orgsMap, await sendRequest(`${API.buhForms}?ogrn=${ogrns}`), "buhForms");
-    render(orgsMap, orgOgrns);
+    Promise.all([API.orgReqs, API.analytics, API.buhForms]
+        .map(url => sendRequest(`${url}?ogrn=${ogrns}`)))
+        .then(([reqs, analytics, buh]) => {
+            const orgsMap = reqsToMap(reqs);
+            addInOrgsMap(orgsMap, analytics, "analytics");
+            addInOrgsMap(orgsMap, buh, "buhForms");
+            render(orgsMap, orgOgrns);
+        });
 }
 
 run();
 
 function sendRequest(url) {
-    return fetch(url).then(response => response.json())
+    return fetch(url).then(response => {
+        if (response.ok) {
+            return response.json()
+        } else {
+            alert(`${response.status} ${response.statusText}`)
+        }
+    })
 }
 
 function reqsToMap(requisites) {
