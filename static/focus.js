@@ -5,37 +5,47 @@ const API = {
     buhForms: "/api3/buh",
 };
 
-function run() {
-    sendRequest(API.organizationList, (orgOgrns) => {
-        const ogrns = orgOgrns.join(",");
-        sendRequest(`${API.orgReqs}?ogrn=${ogrns}`, (requisites) => {
-            const orgsMap = reqsToMap(requisites);
-            sendRequest(`${API.analytics}?ogrn=${ogrns}`, (analytics) => {
-                addInOrgsMap(orgsMap, analytics, "analytics");
-                sendRequest(`${API.buhForms}?ogrn=${ogrns}`, (buh) => {
-                    addInOrgsMap(orgsMap, buh, "buhForms");
-                    render(orgsMap, orgOgrns);
-                });
-            });
-        });
+async function run() {
+    const orgOgrns = await sendRequest(API.organizationList);
+    console.log(orgOgrns);
+    const ogrns = orgOgrns.join(",");
+    const requisites = sendRequest(`${API.orgReqs}?ogrn=${ogrns}`);
+    const analytics = sendRequest(`${API.analytics}?ogrn=${ogrns}`);
+    const buh = sendRequest(`${API.buhForms}?ogrn=${ogrns}`)
+    Promise.all([requisites, analytics, buh]).then(function(values) {
+        console.log(values[0]);
+        console.log(values[1]);
+        console.log(values[2]);
+        const orgsMap = reqsToMap(values[0]);
+        addInOrgsMap(orgsMap, values[1], "analytics");
+        addInOrgsMap(orgsMap, values[2], "buhForms");
+        render(orgsMap, orgOgrns);
     });
 }
 
 run();
 
-function sendRequest(url, callback) {
-    const xhr = new XMLHttpRequest();
-    xhr.open("GET", url, true);
+async function sendRequest(url) {
+    return fetch(url)
+        .then((response) => { 
+            console.log(response);
+            if (response.ok)
+                return response.json();
+            else
+                alert("РћС€РёР±РєР° HTTP: " + response.status);
+    });
+    // const xhr = new XMLHttpRequest();
+    // xhr.open("GET", url, true);
 
-    xhr.onreadystatechange = function () {
-        if (xhr.readyState === XMLHttpRequest.DONE) {
-            if (xhr.status === 200) {
-                callback(JSON.parse(xhr.response));
-            }
-        }
-    };
+    // xhr.onreadystatechange = function () {
+    //     if (xhr.readyState === XMLHttpRequest.DONE) {
+    //         if (xhr.status === 200) {
+    //             callback(JSON.parse(xhr.response));
+    //         }
+    //     }
+    // };
 
-    xhr.send();
+    // xhr.send();
 }
 
 function reqsToMap(requisites) {
