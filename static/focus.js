@@ -5,6 +5,7 @@ const API = {
     buhForms: "/api3/buh",
 };
 
+
 async function run() {
     const orgOgrns = await sendRequest(API.organizationList);
     console.log(orgOgrns);
@@ -25,7 +26,9 @@ async function run() {
     render(orgsMap, orgOgrns);
 }
 
+
 run();
+
 
 async function sendRequest(url) {
     return fetch(url)
