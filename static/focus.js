@@ -5,37 +5,31 @@ const API = {
     buhForms: "/api3/buh",
 };
 
-function run() {
-    sendRequest(API.organizationList, (orgOgrns) => {
-        const ogrns = orgOgrns.join(",");
-        sendRequest(`${API.orgReqs}?ogrn=${ogrns}`, (requisites) => {
-            const orgsMap = reqsToMap(requisites);
-            sendRequest(`${API.analytics}?ogrn=${ogrns}`, (analytics) => {
-                addInOrgsMap(orgsMap, analytics, "analytics");
-                sendRequest(`${API.buhForms}?ogrn=${ogrns}`, (buh) => {
-                    addInOrgsMap(orgsMap, buh, "buhForms");
-                    render(orgsMap, orgOgrns);
-                });
-            });
-        });
+async function run() {
+    const orgOgrns = await sendRequest(API.organizationList);
+    const ogrns = orgOgrns.join(",");
+
+    Promise.all([
+        sendRequest(`${API.orgReqs}?ogrn=${ogrns}`),
+        sendRequest(`${API.analytics}?ogrn=${ogrns}`),
+        sendRequest(`${API.buhForms}?ogrn=${ogrns}`)
+    ]).then(([requisites, analytics, buh]) => {
+        const orgsMap = reqsToMap(requisites);
+        addInOrgsMap(orgsMap, analytics, "analytics")
+        addInOrgsMap(orgsMap, buh, "buhForms");
+        render(orgsMap, orgOgrns);
     });
 }
 
 run();
 
-function sendRequest(url, callback) {
-    const xhr = new XMLHttpRequest();
-    xhr.open("GET", url, true);
-
-    xhr.onreadystatechange = function () {
-        if (xhr.readyState === XMLHttpRequest.DONE) {
-            if (xhr.status === 200) {
-                callback(JSON.parse(xhr.response));
-            }
-        }
-    };
-
-    xhr.send();
+async function sendRequest(url) {
+    return fetch(url)
+        .then((response) => {
+            if (response.ok)
+                return response.json();
+            alert("Ошибка HTTP: " + response.status);
+        });
 }
 
 function reqsToMap(requisites) {
@@ -46,9 +40,8 @@ function reqsToMap(requisites) {
 }
 
 function addInOrgsMap(orgsMap, additionalInfo, key) {
-    for (const item of additionalInfo) {
+    for (const item of additionalInfo)
         orgsMap[item.ogrn][key] = item[key];
-    }
 }
 
 function render(organizationsInfo, organizationsOrder) {
@@ -86,11 +79,10 @@ function renderOrganization(orgInfo, template, container) {
                 orgInfo.buhForms[orgInfo.buhForms.length - 1].form2[0] &&
                 orgInfo.buhForms[orgInfo.buhForms.length - 1].form2[0]
                     .endValue) ||
-                0
+            0
         );
-    } else {
+    } else
         money.textContent = "—";
-    }
 
     const addressFromServer = orgInfo.UL.legalAddress.parsedAddressRF;
     address.textContent = createAddress(addressFromServer);
@@ -113,18 +105,14 @@ function formatMoney(money) {
 
 function createAddress(address) {
     const addressToRender = [];
-    if (address.regionName) {
+    if (address.regionName)
         addressToRender.push(createAddressItem("regionName"));
-    }
-    if (address.city) {
+    if (address.city)
         addressToRender.push(createAddressItem("city"));
-    }
-    if (address.street) {
+    if (address.street)
         addressToRender.push(createAddressItem("street"));
-    }
-    if (address.house) {
+    if (address.house)
         addressToRender.push(createAddressItem("house"));
-    }
 
     return addressToRender.join(", ");
 
