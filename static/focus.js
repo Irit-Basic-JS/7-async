@@ -8,11 +8,13 @@ const API = {
 async function run() {
     let orgOgrns = await sendRequest(API.organizationList);    
     let ogrns = orgOgrns.join(",");
-    let requisites = await sendRequest(`${API.orgReqs}?ogrn=${ogrns}`);
+    let [requisites, analytics, buhF] = await Promise.all([
+        sendRequest(`${API.orgReqs}?ogrn=${ogrns}`),
+        sendRequest(`${API.analytics}?ogrn=${ogrns}`),
+        sendRequest(`${API.buhForms}?ogrn=${ogrns}`)
+    ]);
     let orgsMap = reqsToMap(requisites);
-    let analytics = await sendRequest(`${API.analytics}?ogrn=${ogrns}`);
     addInOrgsMap(orgsMap, analytics, "analytics");    
-    let buhF = await sendRequest(`${API.buhForms}?ogrn=${ogrns}`)    
     addInOrgsMap(orgsMap, buhF, "buhForms");
     render(orgsMap, orgOgrns);
 }
