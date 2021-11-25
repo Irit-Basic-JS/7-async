@@ -8,19 +8,19 @@ const API = {
 async function run() {
     const orgOgrns = await sendRequest(API.organizationList);    
     const ogrns = orgOgrns.join(",");
-    
-    const requisites = await sendRequest(`${API.orgReqs}?ogrn=${ogrns}`);
-    console.log(requisites);
+
+    const requisitesPromise = sendRequest(`${API.orgReqs}?ogrn=${ogrns}`);
+    const analyticsPromise = sendRequest(`${API.analytics}?ogrn=${ogrns}`);
+    const buhPromise = sendRequest(`${API.buhForms}?ogrn=${ogrns}`);
+
+    [analytics, requisites, buh] = await Promise.all([analyticsPromise, requisitesPromise, buhPromise]);
+    //console.log(analytics);
+    //console.log(requisites);
+    //console.log(buh);
 
     const orgsMap = reqsToMap(requisites);
-    const analytics = await sendRequest(`${API.analytics}?ogrn=${ogrns}`);
-    console.log(analytics);
-
-    addInOrgsMap(orgsMap, analytics, "analytics");    
-    const buh = await sendRequest(`${API.buhForms}?ogrn=${ogrns}`)
-    
+    addInOrgsMap(orgsMap, analytics, "analytics");        
     addInOrgsMap(orgsMap, buh, "buhForms");
-    console.log(buh);
     render(orgsMap, orgOgrns);
 }
 
@@ -29,20 +29,12 @@ run();
 async function sendRequest(url) {
     return fetch(url)
       .then((response) => { 
-          console.log(response);
+          //console.log(response);
           if (response.ok)
             return response.json();
           else
             alert("Ошибка HTTP: " + response.status);
       });
-
-    // return new Promise((resolve, reject) => {
-    //     const xhr = new XMLHttpRequest();
-    //     xhr.open("GET", url);
-    //     xhr.onload = () => resolve(JSON.parse(xhr.response));
-    //     xhr.onerror = () => reject(xhr.statusText);
-    //     xhr.send();
-    // });
 }
 
 function reqsToMap(requisites) {
