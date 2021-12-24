@@ -7,7 +7,7 @@ const API = {
 
 async function run() {
     let orgOgrns = await sendRequest(API.organizationList)
-    let orgns = orgOgrns.join(",");
+    let ogrns = orgOgrns.join(",");
 
     Promise.all([
         sendRequest(`${API.orgReqs}?ogrn=${ogrns}`),
@@ -25,12 +25,12 @@ async function run() {
 
 run();
 
-function sendRequest(url, _) {
+async function sendRequest(url, _) {
     let response = await fetch(url);
     if (response.ok) {
         return await response.json();
     } else {
-        throw new Error("Ошибка: " + response.status)
+        throw new Error("Ошибка HTTP: " + response.status)
     }
 }
 
@@ -82,7 +82,7 @@ function renderOrganization(orgInfo, template, container) {
                 orgInfo.buhForms[orgInfo.buhForms.length - 1].form2[0] &&
                 orgInfo.buhForms[orgInfo.buhForms.length - 1].form2[0]
                     .endValue) ||
-                0
+            0
         );
     } else {
         money.textContent = "—";
